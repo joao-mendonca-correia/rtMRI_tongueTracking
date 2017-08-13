@@ -16,14 +16,14 @@ if ~length(d)
 end
 
 
-%% The method is:
+%% The image-processing method is based on:
 %1-dilate
 %2-clear small clusters
 %3-erode
 
 
 %% options to adjust
-firstFrame = 40;
+firstFrame = 1;
 
 BWfactor = 2;
 SE_dilMask_strel = 5; %Radius used to dilate a disk shape, 5
@@ -52,7 +52,7 @@ for frame = frames
     
     if (t==1)
         %define region of interest ROI
-        fprintf('*** Use the mouse the demark the Region Of Interest (ROI) for tongue segmentation\nOnly min and max will be used to make a rectangular ROI\n');
+        fprintf('*** STEP 1: Use the mouse the demark the Region Of Interest (ROI) for tongue segmentation\nOnly min and max will be used to make a rectangular ROI\n');
         SelectedMargin = roipoly(I);
         sumRows = sum(SelectedMargin,2);
         sumCols = sum(SelectedMargin,1);
@@ -124,12 +124,12 @@ for frame = frames
     
     if(t==1)
         %define tongue mask
-        fprintf('*** Use the mouse the demark the contour of the tongue\n');
+        fprintf('*** STEP 2: Use the mouse the demark the contour of the tongue\n');
         templateMask = roipoly(I);
         templateMask0 = templateMask;
         
         %define other structures that you don't ever want the tongue to invade
-        fprintf('*** Use the mouse the demark other structures you don''t want the tongue to invade, like palate or velum\n');
+        fprintf('*** STEP 3: Use the mouse the demark other structures you don''t want the tongue to invade, like palate or velum\n');
         ExternalMask = roipoly(I);
         
     end
